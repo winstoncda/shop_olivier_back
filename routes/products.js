@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/addToCart", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { id, title, price } = req.body;
   const insertSql =
     "INSERT INTO cart (title, price, idProduct) VALUES (?, ?, ?)";
@@ -25,6 +25,16 @@ router.post("/addToCart", (req, res) => {
 router.get("/getCart", (req, res) => {
   connection.query("SELECT * FROM cart", (err, result) => {
     res.status(200).json(result);
+  });
+});
+
+router.delete("/deleteArticle/:idProduct", (req, res) => {
+  console.log(req.params);
+  const { idProduct } = req.params;
+  const deleteSql = "DELETE FROM cart WHERE idProduct = ?";
+  connection.query(deleteSql, [idProduct], (err, result) => {
+    if (err) throw err;
+    res.status(200).json({ message: "Article supprimé" });
   });
 });
 
