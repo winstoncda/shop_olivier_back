@@ -22,4 +22,10 @@ router.post("/addToCart", (req, res) => {
   });
 });
 
+router.get("/getCart", (req, res) => {
+  connection.query("SELECT * FROM cart", (err, result) => {
+    res.status(200).json(result);
+  });
+});
+
 module.exports = router;
