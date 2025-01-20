@@ -11,4 +11,15 @@ router.get("/", (req, res) => {
   });
 });
 
+router.post("/addToCart", (req, res) => {
+  console.log(req.body);
+  const { id, title, price } = req.body;
+  const insertSql =
+    "INSERT INTO cart (title, price, idProduct) VALUES (?, ?, ?)";
+  connection.query(insertSql, [title, price, id], (err, result) => {
+    if (err) throw err;
+    res.status(200).json({ message: "OK" });
+  });
+});
+
 module.exports = router;
